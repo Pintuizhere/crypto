@@ -11,6 +11,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle sign up logic here
+    console.log('Sign Up Submitted:', { email, password, confirmPassword });
   };
 
   const requirements = [
@@ -21,18 +22,19 @@ const SignUp = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-darkBg flex items-center">
+    <div className="min-h-screen pt-24 pb-20 bg-black flex items-center">
       <div className="container mx-auto px-4">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create an Account</h1>
-            <p className="text-lightGray">Join millions of traders on CryptoTrade</p>
+            <h1 className="text-3xl font-bold mb-2 text-white">Create an Account</h1>
+            <p className="text-gray-400">Join millions of traders on CryptoTrade</p>
           </div>
 
           <div className="bg-neutral-900/50 backdrop-blur-sm p-8 rounded-2xl">
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label htmlFor="email" className="block text-sm font-medium mb-2 text-white">
                   Email Address
                 </label>
                 <input
@@ -40,14 +42,15 @@ const SignUp = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neon transition-colors"
+                  className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-400 transition"
                   placeholder="Enter your email"
                   required
                 />
               </div>
 
+              {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-2">
+                <label htmlFor="password" className="block text-sm font-medium mb-2 text-white">
                   Password
                 </label>
                 <div className="relative">
@@ -56,29 +59,28 @@ const SignUp = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neon transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-400 transition"
                     placeholder="Create a password"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
 
+                {/* Password Requirements */}
                 <div className="mt-3 space-y-2">
                   {requirements.map((req, index) => (
                     <div key={index} className="flex items-center text-sm">
                       <Check
                         size={16}
-                        className={`mr-2 ${
-                          req.met ? 'text-neon' : 'text-neutral-500'
-                        }`}
+                        className={`mr-2 ${req.met ? 'text-lime-400' : 'text-gray-500'}`}
                       />
-                      <span className={req.met ? 'text-neon' : 'text-neutral-500'}>
+                      <span className={req.met ? 'text-lime-400' : 'text-gray-500'}>
                         {req.label}
                       </span>
                     </div>
@@ -86,8 +88,9 @@ const SignUp = () => {
                 </div>
               </div>
 
+              {/* Confirm Password */}
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2 text-white">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -96,49 +99,53 @@ const SignUp = () => {
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neon transition-colors"
+                    className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-400 transition"
                     placeholder="Confirm your password"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex items-start">
+              {/* Terms and Conditions */}
+              <div className="flex items-start text-white text-sm">
                 <input
                   type="checkbox"
                   id="terms"
-                  className="mt-1 w-4 h-4 rounded border-neutral-700 text-neon focus:ring-neon focus:ring-offset-0 bg-neutral-800"
+                  className="mt-1 w-4 h-4 rounded border-neutral-700 text-lime-400 bg-neutral-800 focus:ring-lime-400"
                   required
                 />
-                <label htmlFor="terms" className="ml-2 text-sm text-lightGray">
+                <label htmlFor="terms" className="ml-2">
                   I agree to the{' '}
-                  <Link to="/terms" className="text-neon hover:text-[#A5F32F]">
+                  <Link to="/terms" className="text-lime-400 hover:text-lime-300">
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link to="/privacy" className="text-neon hover:text-[#A5F32F]">
+                  <Link to="/privacy" className="text-lime-400 hover:text-lime-300">
                     Privacy Policy
                   </Link>
                 </label>
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-neon text-darkBg py-3 rounded-xl font-semibold hover:bg-[#A5F32F] transition-all duration-300 flex items-center justify-center group"
+                className="w-full bg-lime-400 text-black py-3 rounded-xl font-semibold hover:bg-lime-300 transition-all duration-300 flex items-center justify-center group"
               >
                 Create Account
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
 
+            {/* Sign In Link */}
             <div className="mt-6 text-center">
-              <p className="text-lightGray">
+              <p className="text-gray-400">
                 Already have an account?{' '}
-                <Link to="/signin" className="text-neon hover:text-[#A5F32F] transition-colors">
+                <Link to="/signin" className="text-lime-400 hover:text-lime-300 transition-colors">
                   Sign in
                 </Link>
               </p>
             </div>
+
           </div>
         </div>
       </div>
