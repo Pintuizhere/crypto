@@ -1,0 +1,41 @@
+.crypto-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0,255,136,0.08), transparent 70%), 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.04), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04), transparent 50%);
+    background-repeat: no-repeat;
+    animation: crypto-pulse 15s ease-in-out infinite;
+  }
+  
+  @keyframes crypto-pulse {
+    0%, 100% {
+      background-position: 50% 50%, 20% 80%, 80% 20%;
+    }
+    50% {
+      background-position: 55% 55%, 22% 78%, 75% 25%;
+    }
+  }
+
+  .crypto-grid {
+    background-image: radial-gradient(rgba(192, 255, 71, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: pulseGrid 10s linear infinite;
+  }
+  
+  @keyframes pulseGrid {
+    0% {
+      background-position: 0 0;
+      opacity: 0.5;
+    }
+    50% {
+      background-position: 15px 15px;
+      opacity: 0.3;
+    }
+    100% {
+      background-position: 0 0;
+      opacity: 0.5;
+    }
+  }
+  
