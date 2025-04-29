@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate for redirection
+import axios from 'axios'; // Importing axios for API requests
 import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // Error state to display login error message
+  const [loading, setLoading] = useState(false); // Loading state for button and process indication
+  const navigate = useNavigate(); // For redirection after successful login
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log('Submitted:', { email, password });
+    
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      console.log(response.data);
+  
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/');
+      }
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+      setError('Invalid email or password');
+    }
   };
+  
 
   return (
     <div className="min-h-screen pt-24 pb-20 bg-black flex items-center">
@@ -80,12 +96,16 @@ const SignIn = () => {
                 </Link>
               </div>
 
+              {/* Error Message (if login fails) */}
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-lime-400 text-black py-3 rounded-xl font-semibold hover:bg-lime-300 transition-all duration-300 flex items-center justify-center group"
+                className={`w-full ${loading ? 'bg-gray-400' : 'bg-lime-400'} text-black py-3 rounded-xl font-semibold hover:bg-lime-300 transition-all duration-300 flex items-center justify-center group`}
+                disabled={loading} // Disable the button when loading
               >
-                Sign In
+                {loading ? 'Signing In...' : 'Sign In'}
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>

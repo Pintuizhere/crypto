@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import './ui/Hero.css'; // Don't forget to import the animation styles
+import './ui/Hero.css';
 
 const Hero = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <section className="pt-32 pb-20 bg-[#0a0a0a] overflow-hidden relative">
       {/* ✨ Animated crypto background particles */}
@@ -29,24 +38,25 @@ const Hero = () => {
               The secure peer-to-peer platform to buy, sell, and trade digital currencies, anytime, anywhere.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                className="px-8 py-3 bg-lime-400 text-black font-semibold rounded-xl hover:bg-[#A5F32F] transition-all duration-300"
-              >
-                Sign Up
-              </button>
-              <button
-                className="px-8 py-3 border-2 border-white text-white font-semibold rounded-xl hover:border-lime-400 hover:text-lime-400 transition-all duration-300 flex items-center justify-center"
-              >
-                Create Account
-              </button>
-            </div>
+            {!isLoggedIn && (
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  className="px-8 py-3 bg-lime-400 text-black font-semibold rounded-xl hover:bg-[#A5F32F] transition-all duration-300"
+                >
+                  Sign Up
+                </button>
+                <button
+                  className="px-8 py-3 border-2 border-white text-white font-semibold rounded-xl hover:border-lime-400 hover:text-lime-400 transition-all duration-300 flex items-center justify-center"
+                >
+                  Create Account
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Right Graphics (unchanged) */}
+          {/* Right Graphics */}
           <div className="w-full lg:w-1/2 relative hidden sm:block">
             <div className="relative">
-              {/* Orbit graphics */}
               <div className="absolute w-full h-full pointer-events-none">
                 <div className="w-64 h-64 md:w-80 md:h-80 border border-neutral-700 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 animate-[spin_10s_linear_infinite] hover:animate-none"></div>
                 <div className="w-48 h-48 md:w-64 md:h-64 border border-neutral-600 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30 animate-[spin_15s_linear_infinite] hover:animate-none"></div>

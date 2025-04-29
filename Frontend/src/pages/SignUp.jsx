@@ -1,19 +1,50 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowRight, Check } from 'lucide-react';
+import axios from 'axios'; // Import axios
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState(''); // State for error messages
+  const navigate = useNavigate(); // For redirecting after successful signup
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log('Sign Up Submitted:', { email, password, confirmPassword });
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match.");
+    }
+  
+    try {
+      // Make the API request
+      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+        email,
+        password,
+        confirmPassword
+      });
+  
+      // Log the response to see what you're getting
+      console.log(response.data);
+  
+      // If registration is successful, navigate to the login page
+      navigate('/');
+    } catch (error) {
+      // Enhanced error handling
+      if (error.response) {
+        // If the backend responded with an error
+        setError(error.response.data.message || 'Something went wrong. Please try again.');
+      } else if (error.request) {
+        // If the request was made but no response was received
+        setError('No response from server. Please check your network connection.');
+      } else {
+        // Any other errors
+        setError('An error occurred while processing your request.');
+      }
+    }
   };
-
+  
   const requirements = [
     { label: 'At least 8 characters', met: password.length >= 8 },
     { label: 'At least one uppercase letter', met: /[A-Z]/.test(password) },
@@ -106,6 +137,11 @@ const SignUp = () => {
                 </div>
               </div>
 
+              {/* Display Error */}
+              {error && (
+                <div className="text-red-500 text-sm mt-2">{error}</div>
+              )}
+
               {/* Terms and Conditions */}
               <div className="flex items-start text-white text-sm">
                 <input
@@ -129,7 +165,7 @@ const SignUp = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-lime-400 text-black py-3 rounded-xl font-semibold hover:bg-lime-300 transition-all duration-300 flex items-center justify-center group"
+                className="w-full cursor-pointer bg-lime-400 text-black py-3 rounded-xl font-semibold hover:bg-lime-300 transition-all duration-300 flex items-center justify-center group"
               >
                 Create Account
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
