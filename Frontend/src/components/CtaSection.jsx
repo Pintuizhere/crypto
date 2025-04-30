@@ -4,7 +4,7 @@ import { Twitter, Facebook, Instagram, Send, MessageSquare } from 'lucide-react'
 const CtaSection = () => {
   return (
     <section className="py-20 bg-gray-900">
-      <div className="container mx-auto max-w-6xl px-4">
+      <div className="container mx-auto max-w-7xl px-4">
         <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl overflow-hidden relative border border-gray-700/50 backdrop-blur-sm">
           {/* Glow effects */}
           <div className="absolute inset-0 overflow-hidden">

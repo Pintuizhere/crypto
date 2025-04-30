@@ -25,7 +25,7 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto max-w-6xl px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center">
+        <div className="flex flex-col lg:flex-row justify-between">
           {/* Left Content */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
